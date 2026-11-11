@@ -56,13 +56,14 @@ Se utilizará una adaptación de **SCRUM** para organizar el trabajo:
 RegistroDeportivo/
 ├── public/
 ├── src/
-│ ├── components/
-│ ├── context/
-│ ├── hooks/
-│ ├── pages/
-│ ├── App.jsx
-│ ├── index.css
-│ └── main.jsx
+│ ├── components/ → Componentes reutilizables (botones, tarjetas, etc.)
+│ ├── pages/ → Páginas principales (Inicio, Registro, Historial)
+│ ├── context/ → Contextos globales (estado de actividades)
+│ ├── hooks/ → Custom hooks (useLocalStorage, useActividades)
+│ ├── data/ → Datos de ejemplo y constantes
+│ ├── App.jsx → Componente principal
+│ ├── main.jsx → Punto de entrada
+│ └── index.css → Estilos globales
 ├── index.html
 ├── package.json
 ├── README.md
