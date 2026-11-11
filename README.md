@@ -20,12 +20,7 @@ Este proyecto se desarrollará como parte del módulo final del curso, aplicando
 
 ## 👥 Equipo de Trabajo
 
-*(Aquí debes poner tu nombre o los nombres de los integrantes del equipo)*
-
-- **Integrante 1:** [Tu nombre]
-- **Integrante 2:** [Nombre del compañero, si aplica]
-
-> 💡 **Nota:** Si trabajas de forma individual, solo pon tu nombre.
+Stephanie Elizabeth Medina Ponce
 
 ## 📋 Acuerdos de Trabajo
 
@@ -58,3 +53,17 @@ Se utilizará una adaptación de **SCRUM** para organizar el trabajo:
 - `refactor: descripción` → Refactorización de código.
 
 ## 📂 Estructura del Proyecto
+RegistroDeportivo/
+├── public/
+├── src/
+│ ├── components/
+│ ├── context/
+│ ├── hooks/
+│ ├── pages/
+│ ├── App.jsx
+│ ├── index.css
+│ └── main.jsx
+├── index.html
+├── package.json
+├── README.md
+└── vite.config.js
