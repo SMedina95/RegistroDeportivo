@@ -1,16 +1,60 @@
-# React + Vite
+# 🚴 Aplicación de Registro de Actividades Deportivas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Descripción del Proyecto
 
-Currently, two official plugins are available:
+Esta aplicación web permitirá a los usuarios registrar y hacer seguimiento de sus actividades deportivas (correr, nadar, ciclismo, etc.). El objetivo es ofrecer una interfaz intuitiva para:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Registrar actividades:** Añadir una nueva actividad con tipo, duración, distancia y fecha.
+- **Visualizar historial:** Ver una lista de todas las actividades registradas.
+- **Filtrar y ordenar:** Buscar actividades por tipo o fecha.
+- **Estadísticas:** Ver un resumen del total de kilómetros recorridos y tiempo invertido.
 
-## React Compiler
+Este proyecto se desarrollará como parte del módulo final del curso, aplicando los conocimientos de React, React Router, manejo de estado y consumo de APIs.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🎯 Objetivos
 
-## Expanding the ESLint configuration
+- Aplicar los conceptos de React (componentes, hooks, context, rutas).
+- Implementar un CRUD completo (Crear, Leer, Actualizar, Eliminar).
+- Utilizar `localStorage` o un backend (Express) para persistir los datos.
+- Desplegar la aplicación en Vercel.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 👥 Equipo de Trabajo
+
+*(Aquí debes poner tu nombre o los nombres de los integrantes del equipo)*
+
+- **Integrante 1:** [Tu nombre]
+- **Integrante 2:** [Nombre del compañero, si aplica]
+
+> 💡 **Nota:** Si trabajas de forma individual, solo pon tu nombre.
+
+## 📋 Acuerdos de Trabajo
+
+### Metodología
+
+Se utilizará una adaptación de **SCRUM** para organizar el trabajo:
+
+- **Sprints semanales:** Cada semana se define un conjunto de tareas a completar.
+- **Reuniones diarias (Daily Stand-up):** Breve actualización del progreso (si es en equipo).
+- **Revisión al final de cada sprint:** Se revisa lo completado y se ajustan las prioridades.
+
+### Herramientas
+
+- **Control de versiones:** Git y GitHub.
+- **Gestión de tareas:** Trello o GitHub Projects.
+- **Comunicación:** WhatsApp o Discord (si es en equipo).
+- **Editor de código:** VS Code.
+
+### Ramas de Git
+
+- `main`: Rama principal (versión estable).
+- `parte-1`, `parte-2`, etc.: Ramas para cada entrega.
+- `feature/nombre-funcionalidad`: Ramas para funcionalidades específicas (si es necesario).
+
+### Convención de Commits
+
+- `feat: descripción` → Nueva funcionalidad.
+- `fix: descripción` → Corrección de errores.
+- `docs: descripción` → Cambios en documentación.
+- `refactor: descripción` → Refactorización de código.
+
+## 📂 Estructura del Proyecto
