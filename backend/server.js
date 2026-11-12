@@ -58,12 +58,12 @@ app.get('/', (req, res) => {
 });
 
 // GET: Obtener todas las actividades
-app.get('/api/actividades', authMiddleware, (req, res) => {
+app.get('/api/actividades', (req, res) => {
     res.json(actividades);
 });
 
 // GET: Obtener una actividad por ID
-app.get('/api/actividades/:id', authMiddleware, (req, res) => {
+app.get('/api/actividades/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const actividad = actividades.find((a) => a.id === id);
 
@@ -75,7 +75,7 @@ app.get('/api/actividades/:id', authMiddleware, (req, res) => {
 });
 
 // POST: Crear una nueva actividad
-app.post('/api/actividades', authMiddleware, (req, res) => {
+app.post('/api/actividades',  (req, res) => {
     const { tipo, duracion, distancia, fecha, notas } = req.body;
 
     if (!tipo || !duracion || !fecha) {
@@ -98,7 +98,7 @@ app.post('/api/actividades', authMiddleware, (req, res) => {
 });
 
 // DELETE: Eliminar una actividad por ID
-app.delete('/api/actividades/:id', authMiddleware, (req, res) => {
+app.delete('/api/actividades/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = actividades.findIndex((a) => a.id === id);
 

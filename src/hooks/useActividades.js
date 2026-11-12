@@ -1,7 +1,7 @@
 // src/hooks/useActividades.js
 // ============================================
 // CUSTOM HOOK: useActividades
-// Consume la API del backend con fetch
+// Consume la API del backend con manejo de errores
 // ============================================
 
 import { useState, useEffect } from 'react';
@@ -13,10 +13,12 @@ function useActividades() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Cargar actividades al montar el componente
+    // Cargar actividades al montar
     useEffect(() => {
         const fetchActividades = async () => {
             try {
+                setLoading(true);
+                setError(null);
                 const res = await fetch(API_URL);
                 if (!res.ok) throw new Error('Error al cargar actividades');
                 const data = await res.json();
@@ -31,7 +33,7 @@ function useActividades() {
         fetchActividades();
     }, []);
 
-    // Función para agregar una actividad (POST)
+    // Agregar actividad con validación y manejo de errores
     const agregarActividad = async (nuevaActividad) => {
         try {
             const res = await fetch(API_URL, {
@@ -40,23 +42,28 @@ function useActividades() {
                 body: JSON.stringify(nuevaActividad),
             });
 
-            if (!res.ok) throw new Error('Error al agregar actividad');
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.error || 'Error al agregar la actividad');
+            }
+
             const actividadCreada = await res.json();
             setActividades((prev) => [...prev, actividadCreada]);
-            return actividadCreada;
+            return { success: true, actividad: actividadCreada };
         } catch (err) {
-            setError(err.message);
+            return { success: false, error: err.message };
         }
     };
 
-    // Función para eliminar una actividad (DELETE)
+    // Eliminar actividad con manejo de errores
     const eliminarActividad = async (id) => {
         try {
             const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Error al eliminar actividad');
+            if (!res.ok) throw new Error('Error al eliminar la actividad');
             setActividades((prev) => prev.filter((a) => a.id !== id));
+            return { success: true };
         } catch (err) {
-            setError(err.message);
+            return { success: false, error: err.message };
         }
     };
 
