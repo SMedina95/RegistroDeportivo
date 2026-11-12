@@ -1,7 +1,7 @@
 // src/hooks/useActividades.js
 import { useState, useEffect, useCallback } from 'react';
 
-const API_URL = 'http://localhost:3001/api/actividades';
+const API_URL =  '/api/actividades';
 
 function useActividades() {
     const [actividades, setActividades] = useState([]);

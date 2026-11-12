@@ -111,6 +111,8 @@ app.delete('/api/actividades/:id', (req, res) => {
 });
 
 // Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
-});
+//app.listen(PORT, () => {
+//  console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
+//});
+
+module.exports = app;
