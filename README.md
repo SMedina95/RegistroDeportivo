@@ -38,12 +38,3 @@ RegistroDeportivo/
 ├── vercel.json
 └── README.md
 
-## ⚙️ Cómo Ejecutar en Local
-
-### Requisitos
-- Node.js (v18+)
-- npm
-
-### Instalación
-```bash
-npm install
