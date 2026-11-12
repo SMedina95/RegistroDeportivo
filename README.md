@@ -1,70 +1,49 @@
-# 🚴 Aplicación de Registro de Actividades Deportivas
+# 🏃 Registro Deportivo
 
-## 📌 Descripción del Proyecto
+## 📌 Descripción
 
-Esta aplicación web permitirá a los usuarios registrar y hacer seguimiento de sus actividades deportivas (correr, nadar, ciclismo, etc.). El objetivo es ofrecer una interfaz intuitiva para:
+Aplicación web para registrar y hacer seguimiento de actividades deportivas. Permite agregar, visualizar y eliminar actividades (correr, ciclismo, natación, etc.), con autenticación simulada y persistencia en el backend.
 
-- **Registrar actividades:** Añadir una nueva actividad con tipo, duración, distancia y fecha.
-- **Visualizar historial:** Ver una lista de todas las actividades registradas.
-- **Filtrar y ordenar:** Buscar actividades por tipo o fecha.
-- **Estadísticas:** Ver un resumen del total de kilómetros recorridos y tiempo invertido.
+## 🌐 Demo en Vivo
 
-Este proyecto se desarrollará como parte del módulo final del curso, aplicando los conocimientos de React, React Router, manejo de estado y consumo de APIs.
+Puedes probar la aplicación en:
 
-## 🎯 Objetivos
+**https://registro-deportivo.vercel.app**
 
-- Aplicar los conceptos de React (componentes, hooks, context, rutas).
-- Implementar un CRUD completo (Crear, Leer, Actualizar, Eliminar).
-- Utilizar `localStorage` o un backend (Express) para persistir los datos.
-- Desplegar la aplicación en Vercel.
 
-## 👥 Equipo de Trabajo
 
-Stephanie Elizabeth Medina Ponce
+## 🛠️ Tecnologías Utilizadas
 
-## 📋 Acuerdos de Trabajo
-
-### Metodología
-
-Se utilizará una adaptación de **SCRUM** para organizar el trabajo:
-
-- **Sprints semanales:** Cada semana se define un conjunto de tareas a completar.
-- **Reuniones diarias (Daily Stand-up):** Breve actualización del progreso (si es en equipo).
-- **Revisión al final de cada sprint:** Se revisa lo completado y se ajustan las prioridades.
-
-### Herramientas
-
-- **Control de versiones:** Git y GitHub.
-- **Gestión de tareas:** Trello o GitHub Projects.
-- **Comunicación:** WhatsApp o Discord (si es en equipo).
-- **Editor de código:** VS Code.
-
-### Ramas de Git
-
-- `main`: Rama principal (versión estable).
-- `parte-1`, `parte-2`, etc.: Ramas para cada entrega.
-- `feature/nombre-funcionalidad`: Ramas para funcionalidades específicas (si es necesario).
-
-### Convención de Commits
-
-- `feat: descripción` → Nueva funcionalidad.
-- `fix: descripción` → Corrección de errores.
-- `docs: descripción` → Cambios en documentación.
-- `refactor: descripción` → Refactorización de código.
+- **Frontend:** React 18, Vite, React Router, Tailwind CSS, React Hook Form, Zod.
+- **Backend:** Node.js, Express (desplegado en Vercel Services / Railway / o simulado).
+- **Autenticación:** Simulada con Context API y localStorage.
+- **Despliegue:** Vercel.
 
 ## 📂 Estructura del Proyecto
 RegistroDeportivo/
+├── backend/ → Servidor Express (API REST)
 ├── public/
 ├── src/
-│ ├── components/ → Componentes reutilizables (botones, tarjetas, etc.)
-│ ├── pages/ → Páginas principales (Inicio, Registro, Historial)
-│ ├── context/ → Contextos globales (estado de actividades)
-│ ├── hooks/ → Custom hooks (useLocalStorage, useActividades)
-│ ├── data/ → Datos de ejemplo y constantes
-│ ├── App.jsx → Componente principal
-│ ├── main.jsx → Punto de entrada
-│ └── index.css → Estilos globales
+│ ├── components/ → Componentes reutilizables (FormularioActividad, ListaActividades)
+│ ├── context/ → AuthContext
+│ ├── data/ → Datos de ejemplo
+│ ├── hooks/ → useActividades
+│ ├── pages/ → Home, Profile, Login
+│ ├── validations/ → actividadSchema (Zod)
+│ ├── App.jsx
+│ ├── index.css
+│ └── main.jsx
 ├── index.html
 ├── package.json
-├── README.md
-└── vite.config.js
+├── vercel.json
+└── README.md
+
+## ⚙️ Cómo Ejecutar en Local
+
+### Requisitos
+- Node.js (v18+)
+- npm
+
+### Instalación
+```bash
+npm install
