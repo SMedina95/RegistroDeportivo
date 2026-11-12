@@ -1,22 +1,32 @@
 // src/pages/Home.jsx
+import { useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import useActividades from '../hooks/useActividades';
 import { useAuth } from '../context/AuthContext';
 import FormularioActividad from '../components/FormularioActividad';
+import ListaActividades from '../components/ListaActividades';
 
 function Home() {
     const { actividades, loading, error, agregarActividad, eliminarActividad } = useActividades();
     const { user } = useAuth();
 
-    const handleAgregar = async (nuevaActividad) => {
-        return await agregarActividad(nuevaActividad);
-    };
+    // Optimización: useMemo para calcular el total de kilómetros
+    const totalKilometros = useMemo(() => {
+        console.log('🔄 Calculando total de kilómetros...');
+        return actividades.reduce((total, act) => total + (act.distancia || 0), 0);
+    }, [actividades]);
 
-    const handleEliminar = async (id) => {
+    // Optimización: useCallback para handleAgregar
+    const handleAgregar = useCallback(async (nuevaActividad) => {
+        return await agregarActividad(nuevaActividad);
+    }, [agregarActividad]);
+
+    // Optimización: useCallback para handleEliminar
+    const handleEliminar = useCallback(async (id) => {
         if (confirm('¿Eliminar esta actividad?')) {
             await eliminarActividad(id);
         }
-    };
+    }, [eliminarActividad]);
 
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6">
@@ -36,27 +46,14 @@ function Home() {
                 {error && <p className="text-red-400">⚠️ {error}</p>}
 
                 {!loading && !error && (
-                    <ul className="space-y-3">
-                        {actividades.map((act) => (
-                            <li key={act.id} className="bg-gray-800 p-4 rounded-lg border border-gray-700 flex justify-between items-start">
-                                <div>
-                                    <p className="text-lg font-bold text-emerald-400">
-                                        {act.tipo} - {act.duracion} min
-                                    </p>
-                                    <p className="text-sm text-gray-300">
-                                        📅 {act.fecha} | 📏 {act.distancia} km
-                                    </p>
-                                    {act.notas && <p className="text-xs text-gray-400 mt-1">{act.notas}</p>}
-                                </div>
-                                <button
-                                    onClick={() => handleEliminar(act.id)}
-                                    className="text-red-400 hover:text-red-300 text-sm ml-4"
-                                >
-                                    🗑️
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
+                    <>
+                        <div className="mb-4 p-3 bg-gray-800 rounded-lg border border-gray-700 text-center">
+                            <p className="text-sm text-gray-400">
+                                Total de kilómetros recorridos: <strong className="text-emerald-400">{totalKilometros.toFixed(2)} km</strong>
+                            </p>
+                        </div>
+                        <ListaActividades actividades={actividades} onEliminar={handleEliminar} />
+                    </>
                 )}
             </div>
         </div>

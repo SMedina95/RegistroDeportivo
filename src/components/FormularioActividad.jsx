@@ -1,10 +1,5 @@
 // src/components/FormularioActividad.jsx
-// ============================================
-// COMPONENTE: Formulario para agregar actividades
-// con validación con Zod
-// ============================================
-
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { actividadSchema } from '../validations/actividadSchema';
 
 function FormularioActividad({ onAgregar }) {
@@ -21,24 +16,24 @@ function FormularioActividad({ onAgregar }) {
     const [mensajeExito, setMensajeExito] = useState('');
     const [enviando, setEnviando] = useState(false);
 
-    const handleChange = (e) => {
+    // Optimización: useCallback para handleChange
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
-        // Limpiar el error del campo cuando el usuario escribe
         if (errores[name]) {
             setErrores((prev) => ({ ...prev, [name]: '' }));
         }
         setMensajeError('');
         setMensajeExito('');
-    };
+    }, [errores]); // Dependencia: errores (porque lo usa dentro)
 
-    const handleSubmit = async (e) => {
+    // Optimización: useCallback para handleSubmit
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         setErrores({});
         setMensajeError('');
         setMensajeExito('');
 
-        // Convertir los valores a números para la validación
         const datosParaValidar = {
             tipo: formData.tipo,
             duracion: Number(formData.duracion),
@@ -47,7 +42,6 @@ function FormularioActividad({ onAgregar }) {
             notas: formData.notas,
         };
 
-        // Validar con Zod
         const resultado = actividadSchema.safeParse(datosParaValidar);
 
         if (!resultado.success) {
@@ -62,7 +56,6 @@ function FormularioActividad({ onAgregar }) {
             return;
         }
 
-        // Enviar al backend
         setEnviando(true);
         const respuesta = await onAgregar(resultado.data);
         setEnviando(false);
@@ -80,7 +73,7 @@ function FormularioActividad({ onAgregar }) {
         } else {
             setMensajeError(`⚠️ ${respuesta.error}`);
         }
-    };
+    }, [formData, onAgregar]); // Dependencias: formData y onAgregar
 
     return (
         <div className="bg-gray-800 p-6 rounded-xl border border-gray-700 mb-6">

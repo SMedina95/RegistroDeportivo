@@ -1,10 +1,5 @@
 // src/hooks/useActividades.js
-// ============================================
-// CUSTOM HOOK: useActividades
-// Consume la API del backend con manejo de errores
-// ============================================
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const API_URL = 'http://localhost:3001/api/actividades';
 
@@ -13,7 +8,7 @@ function useActividades() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Cargar actividades al montar
+    // Cargar actividades (sin cambios)
     useEffect(() => {
         const fetchActividades = async () => {
             try {
@@ -29,12 +24,11 @@ function useActividades() {
                 setLoading(false);
             }
         };
-
         fetchActividades();
     }, []);
 
-    // Agregar actividad con validación y manejo de errores
-    const agregarActividad = async (nuevaActividad) => {
+    // Optimización: useCallback para agregarActividad
+    const agregarActividad = useCallback(async (nuevaActividad) => {
         try {
             const res = await fetch(API_URL, {
                 method: 'POST',
@@ -53,10 +47,10 @@ function useActividades() {
         } catch (err) {
             return { success: false, error: err.message };
         }
-    };
+    }, []); // Sin dependencias, porque solo usa setActividades (que es estable)
 
-    // Eliminar actividad con manejo de errores
-    const eliminarActividad = async (id) => {
+    // Optimización: useCallback para eliminarActividad
+    const eliminarActividad = useCallback(async (id) => {
         try {
             const res = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
             if (!res.ok) throw new Error('Error al eliminar la actividad');
@@ -65,7 +59,7 @@ function useActividades() {
         } catch (err) {
             return { success: false, error: err.message };
         }
-    };
+    }, []);
 
     return { actividades, loading, error, agregarActividad, eliminarActividad };
 }
