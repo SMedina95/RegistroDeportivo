@@ -1,37 +1,69 @@
 // src/App.jsx
-import useActividades from './hooks/useActividades';
+import { BrowserRouter, Routes, Route, Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Login from './pages/Login';
 
-function App() {
-    const { actividades, loading, error } = useActividades();
+function Navbar() {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
+    if (!user) return null;
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-6">
-            <h1 className="text-4xl font-bold text-center text-emerald-400 mb-8">
+        <nav className="bg-gray-800 border-b border-gray-700 px-6 py-3 flex justify-between items-center">
+            <Link to="/" className="text-emerald-400 font-bold text-lg">
                 🏃 Registro Deportivo
-            </h1>
+            </Link>
+            <div className="flex items-center gap-4">
+                <NavLink to="/" end className={({ isActive }) => (isActive ? 'text-emerald-400' : 'text-gray-300 hover:text-white')}>
+                    Inicio
+                </NavLink>
+                <NavLink to="/profile" className={({ isActive }) => (isActive ? 'text-emerald-400' : 'text-gray-300 hover:text-white')}>
+                    Mi Perfil
+                </NavLink>
+                <button onClick={handleLogout} className="text-red-400 hover:text-red-300 text-sm">
+                    Cerrar sesión
+                </button>
+            </div>
+        </nav>
+    );
+}
 
-            {loading && <p className="text-center text-emerald-300">Cargando actividades...</p>}
-            {error && <p className="text-center text-red-400">⚠️ {error}</p>}
-
-            {!loading && !error && (
-                <div className="max-w-2xl mx-auto">
-                    <h2 className="text-2xl font-semibold mb-4">Mis Actividades</h2>
-                    <ul className="space-y-3">
-                        {actividades.map((act) => (
-                            <li key={act.id} className="bg-gray-800 p-4 rounded-lg border border-gray-700">
-                                <p className="text-lg font-bold text-emerald-400">
-                                    {act.tipo} - {act.duracion} min
-                                </p>
-                                <p className="text-sm text-gray-300">
-                                    📅 {act.fecha} | 📏 {act.distancia} km
-                                </p>
-                                {act.notas && <p className="text-xs text-gray-400 mt-1">{act.notas}</p>}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
+function App() {
+    return (
+        <AuthProvider>
+            <BrowserRouter>
+                <Navbar />
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route
+                        path="/"
+                        element={
+                            <ProtectedRoute>
+                                <Home />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route path="*" element={<Navigate to="/login" replace />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
 }
 

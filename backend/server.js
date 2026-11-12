@@ -40,7 +40,16 @@ let actividades = [
         notas: 'Entrenamiento en la alberca.',
     },
 ];
+// Middleware de autenticación simulado
+const authMiddleware = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
 
+    if (authHeader !== 'Bearer devfseek-token-secreto') {
+        return res.status(401).json({ error: 'No autorizado. Token inválido o ausente.' });
+    }
+
+    next();
+};
 // ========== RUTAS ==========
 
 // Ruta de prueba (Hola Mundo)
@@ -49,12 +58,12 @@ app.get('/', (req, res) => {
 });
 
 // GET: Obtener todas las actividades
-app.get('/api/actividades', (req, res) => {
+app.get('/api/actividades', authMiddleware, (req, res) => {
     res.json(actividades);
 });
 
 // GET: Obtener una actividad por ID
-app.get('/api/actividades/:id', (req, res) => {
+app.get('/api/actividades/:id', authMiddleware, (req, res) => {
     const id = parseInt(req.params.id);
     const actividad = actividades.find((a) => a.id === id);
 
@@ -66,7 +75,7 @@ app.get('/api/actividades/:id', (req, res) => {
 });
 
 // POST: Crear una nueva actividad
-app.post('/api/actividades', (req, res) => {
+app.post('/api/actividades', authMiddleware, (req, res) => {
     const { tipo, duracion, distancia, fecha, notas } = req.body;
 
     if (!tipo || !duracion || !fecha) {
@@ -89,7 +98,7 @@ app.post('/api/actividades', (req, res) => {
 });
 
 // DELETE: Eliminar una actividad por ID
-app.delete('/api/actividades/:id', (req, res) => {
+app.delete('/api/actividades/:id', authMiddleware, (req, res) => {
     const id = parseInt(req.params.id);
     const index = actividades.findIndex((a) => a.id === id);
 
